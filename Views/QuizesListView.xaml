@@ -1,0 +1,68 @@
+﻿<UserControl x:Class="QuizMaker.Views.QuizesListView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:QuizMaker.Views"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800">
+    <Grid Margin="20">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+        </Grid.RowDefinitions>
+
+        <TextBlock 
+            Grid.Row="0"
+            Text="Quizy"
+            FontSize="25"/>
+
+        <ListView Grid.Row="1" Margin="0 15 0 15" Height="250">
+            <ListViewItem/>
+            <ListViewItem/>
+            <ListViewItem/>
+            <ListViewItem/>
+
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn Header="Nazwa quizu">
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <TextBlock Text="Filmy" />
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+
+                    <GridViewColumn Header="Ilość pytań">
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <TextBlock Text="24" />
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+
+                    <GridViewColumn Header="Data modyfikacji">
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <TextBlock Text="15.04.2023" />
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+
+                </GridView>
+            </ListView.View>
+        </ListView>
+        
+        <StackPanel 
+            Orientation="Horizontal"
+            Grid.Row="2"
+            HorizontalAlignment="Center">
+            <Button>Zapisz quiz do pliku .db</Button>
+            <Button Margin="20 0 20 0">Dodaj quiz</Button>
+            <Button>Usuń quiz</Button>
+        </StackPanel>
+        
+
+    </Grid>
+</UserControl>

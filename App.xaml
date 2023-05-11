@@ -1,0 +1,12 @@
+﻿<Application x:Class="QuizMaker.App"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:local="clr-namespace:QuizMaker"
+             StartupUri="MainWindow.xaml">
+    <Application.Resources>
+        <Style TargetType="Button">
+            <Setter Property="Padding" Value="20 10 20 10"/>
+        </Style>
+         
+    </Application.Resources>
+</Application>
