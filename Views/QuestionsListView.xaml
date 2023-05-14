@@ -32,7 +32,7 @@
 
             <ListView.View>
                 <GridView>
-                    <GridViewColumn Header="Numer pytania">
+                    <GridViewColumn Header="Numer pytania" Width="Auto">
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
                                 <TextBlock Text="2" />
@@ -40,7 +40,7 @@
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>
 
-                    <GridViewColumn Header="Nazwa pytania">
+                    <GridViewColumn Header="Nazwa pytania" Width="Auto">
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
                                 <TextBlock Text="Ile lat ma Jezus?" />

@@ -23,8 +23,8 @@
         </Grid.RowDefinitions>
 
         <Grid.ColumnDefinitions>
-            <ColumnDefinition/>
-            <ColumnDefinition/>
+            <ColumnDefinition Width="auto"/>
+            <ColumnDefinition Width="auto"/>
             <ColumnDefinition/>
         </Grid.ColumnDefinitions>
 
@@ -35,91 +35,133 @@
             FontSize="15"/>
 
         <TextBlock 
+            HorizontalAlignment="Center"
             Grid.Row="0"
-            Grid.Column="1"
+            Grid.Column="2"
             Text="Kolejność"
+            Margin="0 0 0 0"
             FontSize="15"/>
 
         <TextBox
             Grid.Row="1"
-            Grid.Column="1"
+            Grid.Column="2"
             Text="0"
-            Width="100"/>
+            FontSize="20"
+            Width="50"
+            Margin="0 0 0 0"/>
 
         <TextBox
             Grid.Row="1"
-            Grid.Column="0"
-            Width="200">Ile filmów wyszło w 2000 roku?</TextBox>
+            Grid.ColumnSpan="2"
+            Width="600"
+            FontSize="20">What is the most popular role of Bob Odenkirk?</TextBox>
 
-
+        
         <TextBlock 
             Grid.Row="2"
             Grid.Column="0"
             Text="Odpowiedź 1"
+            Margin="0 25 0 0 "
             FontSize="15"/>
         <TextBox
             Grid.Row="3"
             Grid.Column="0"
-            Width="200">12500</TextBox>
-        <CheckBox
+            Width="400"
+            VerticalContentAlignment="Center">Saul Goodman</TextBox>
+        <StackPanel
             Grid.Row="3"
-            Grid.Column="1"/>
-        <TextBlock
-            Grid.Row="3"
-            Grid.Column="2"
-            Text="Poprawna odpowiedź"/>
+            Grid.Column="1"
+            Orientation="Horizontal">
+            <CheckBox
+                Margin="30 0 0 0"
+                VerticalContentAlignment="Center">
+                <Label 
+                    Content="Poprawna odpowiedź"
+                    VerticalAlignment="Top"/>
+            </CheckBox>
+        </StackPanel>
 
         <TextBlock 
             Grid.Row="4"
             Grid.Column="0"
             Text="Odpowiedź 2"
+            Margin="0 10 0 0 "
             FontSize="15"/>
         <TextBox
             Grid.Row="5"
             Grid.Column="0"
-            Width="200">12</TextBox>
-        <CheckBox
+            Width="400"
+            VerticalContentAlignment="Center">Jimmy McGill</TextBox>
+        <StackPanel
             Grid.Row="5"
-            Grid.Column="1"/>
-        <TextBlock
-            Grid.Row="5"
-            Grid.Column="2"
-            Text="Poprawna odpowiedź"/>
+            Grid.Column="1"
+            Orientation="Horizontal">
+            <CheckBox
+                Margin="30 0 0 0"
+                VerticalContentAlignment="Center">
+                <Label 
+                    Content="Poprawna odpowiedź"
+                    VerticalAlignment="Top"/>
+            </CheckBox>
+        </StackPanel>
+        
 
         <TextBlock 
             Grid.Row="6"
             Grid.Column="0"
             Text="Odpowiedź 3"
+            Margin="0 10 0 0 "
             FontSize="15"/>
         <TextBox
             Grid.Row="7"
             Grid.Column="0"
-            Width="200">2137</TextBox>
-        <CheckBox
+            Width="400"
+            VerticalContentAlignment="Center">Gene Takavic</TextBox>
+        <StackPanel
             Grid.Row="7"
-            Grid.Column="1"/>
-        <TextBlock
-            Grid.Row="7"
-            Grid.Column="2"
-            Text="Poprawna odpowiedź"/>
-
+            Grid.Column="1"
+            Orientation="Horizontal">
+            <CheckBox
+                Margin="30 0 0 0"
+                VerticalContentAlignment="Center">
+                <Label 
+                    Content="Poprawna odpowiedź"
+                    VerticalAlignment="Top"/>
+            </CheckBox>
+        </StackPanel>
 
         <TextBlock 
             Grid.Row="8"
             Grid.Column="0"
             Text="Odpowiedź 4"
+            Margin="0 10 0 0 "
             FontSize="15"/>
         <TextBox
             Grid.Row="9"
             Grid.Column="0"
-            Width="200">42069</TextBox>
-        <CheckBox
+            Width="400"
+            VerticalContentAlignment="Center">Viktor (with a K)</TextBox>
+        <StackPanel
             Grid.Row="9"
-            Grid.Column="1"/>
-        <TextBlock
-            Grid.Row="9"
-            Grid.Column="2"
-            Text="Poprawna odpowiedź"/>
+            Grid.Column="1"
+            Orientation="Horizontal">
+            <CheckBox
+                Margin="30 0 0 0"
+                VerticalContentAlignment="Center">
+                <Label 
+                    Content="Poprawna odpowiedź"
+                    VerticalAlignment="Top"/>
+            </CheckBox>
+        </StackPanel>
+
+
+
+
+
+
+
+
+
 
 
         <StackPanel 
@@ -127,7 +169,7 @@
             Grid.Row="12"
             Grid.ColumnSpan="3"
             HorizontalAlignment="Center"
-            Margin="20 20 20 20">
+            Margin="20 35 20 20">
             <Button Margin="0 0 20 0">Wróć do pytań</Button>
             <Button>Zapisz odpowiedzi</Button>
         </StackPanel>
