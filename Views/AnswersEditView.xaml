@@ -45,18 +45,19 @@
         <TextBox
             Grid.Row="1"
             Grid.Column="2"
-            Text="0"
             FontSize="20"
             Width="50"
-            Margin="0 0 0 0"/>
+            Margin="0 0 0 0"
+            Text="{Binding QuestionOrder}"/>
 
         <TextBox
             Grid.Row="1"
             Grid.ColumnSpan="2"
             Width="600"
-            FontSize="20">What is the most popular role of Bob Odenkirk?</TextBox>
+            FontSize="20"
+            Text="{Binding QuestionName}"/>
 
-        
+
         <TextBlock 
             Grid.Row="2"
             Grid.Column="0"
@@ -67,14 +68,16 @@
             Grid.Row="3"
             Grid.Column="0"
             Width="400"
-            VerticalContentAlignment="Center">Saul Goodman</TextBox>
+            VerticalContentAlignment="Center"
+            Text="{Binding Answer1}"/>
         <StackPanel
             Grid.Row="3"
             Grid.Column="1"
             Orientation="Horizontal">
             <CheckBox
                 Margin="30 0 0 0"
-                VerticalContentAlignment="Center">
+                VerticalContentAlignment="Center"
+                IsChecked="{Binding Answer1Checked}">
                 <Label 
                     Content="Poprawna odpowiedź"
                     VerticalAlignment="Top"/>
@@ -91,14 +94,16 @@
             Grid.Row="5"
             Grid.Column="0"
             Width="400"
-            VerticalContentAlignment="Center">Jimmy McGill</TextBox>
+            VerticalContentAlignment="Center"
+            Text="{Binding Answer2}"/>
         <StackPanel
             Grid.Row="5"
             Grid.Column="1"
             Orientation="Horizontal">
             <CheckBox
                 Margin="30 0 0 0"
-                VerticalContentAlignment="Center">
+                VerticalContentAlignment="Center"
+                IsChecked="{Binding Answer2Checked}">
                 <Label 
                     Content="Poprawna odpowiedź"
                     VerticalAlignment="Top"/>
@@ -116,14 +121,16 @@
             Grid.Row="7"
             Grid.Column="0"
             Width="400"
-            VerticalContentAlignment="Center">Gene Takavic</TextBox>
+            VerticalContentAlignment="Center"
+            Text="{Binding Answer3}"/>
         <StackPanel
             Grid.Row="7"
             Grid.Column="1"
             Orientation="Horizontal">
             <CheckBox
                 Margin="30 0 0 0"
-                VerticalContentAlignment="Center">
+                VerticalContentAlignment="Center"
+                IsChecked="{Binding Answer3Checked}">
                 <Label 
                     Content="Poprawna odpowiedź"
                     VerticalAlignment="Top"/>
@@ -140,28 +147,21 @@
             Grid.Row="9"
             Grid.Column="0"
             Width="400"
-            VerticalContentAlignment="Center">Viktor (with a K)</TextBox>
+            VerticalContentAlignment="Center"
+            Text="{Binding Answer4}"/>
         <StackPanel
             Grid.Row="9"
             Grid.Column="1"
             Orientation="Horizontal">
             <CheckBox
                 Margin="30 0 0 0"
-                VerticalContentAlignment="Center">
+                VerticalContentAlignment="Center"
+                IsChecked="{Binding Answer4Checked}">
                 <Label 
                     Content="Poprawna odpowiedź"
                     VerticalAlignment="Top"/>
             </CheckBox>
         </StackPanel>
-
-
-
-
-
-
-
-
-
 
 
         <StackPanel 
@@ -170,8 +170,8 @@
             Grid.ColumnSpan="3"
             HorizontalAlignment="Center"
             Margin="20 35 20 20">
-            <Button Margin="0 0 20 0">Wróć do pytań</Button>
-            <Button>Zapisz odpowiedzi</Button>
+            <Button Margin="0 0 20 0" Command="{Binding CancelAnswersCommand}">Wróć do pytań</Button>
+            <Button Command="{Binding SaveAnswersCommand}">Zapisz odpowiedzi</Button>
         </StackPanel>
     
     </Grid>

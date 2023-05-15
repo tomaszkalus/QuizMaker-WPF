@@ -18,18 +18,13 @@
             Text="Quizy"
             FontSize="25"/>
 
-        <ListView Grid.Row="1" Margin="0 15 0 15" Height="250">
-            <ListViewItem/>
-            <ListViewItem/>
-            <ListViewItem/>
-            <ListViewItem/>
-
+        <ListView Grid.Row="1" Margin="0 15 0 15" Height="250" ItemsSource="{Binding Quizes}">
             <ListView.View>
                 <GridView>
                     <GridViewColumn Header="Nazwa quizu">
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
-                                <TextBlock Text="Filmy" />
+                                <TextBlock Text="{Binding QuizName}" />
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>
@@ -37,32 +32,26 @@
                     <GridViewColumn Header="Ilość pytań">
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
-                                <TextBlock Text="24" />
+                                <TextBlock Text="{Binding NumberOfQuestions}" />
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>
 
-                    <GridViewColumn Header="Data modyfikacji">
-                        <GridViewColumn.CellTemplate>
-                            <DataTemplate>
-                                <TextBlock Text="15.04.2023" />
-                            </DataTemplate>
-                        </GridViewColumn.CellTemplate>
-                    </GridViewColumn>
 
                 </GridView>
             </ListView.View>
         </ListView>
-        
+
         <StackPanel 
             Orientation="Horizontal"
             Grid.Row="2"
             HorizontalAlignment="Center">
-            <Button>Zapisz quiz do pliku .db</Button>
-            <Button Margin="20 0 20 0">Dodaj quiz</Button>
-            <Button>Usuń quiz</Button>
+            <Button Command="{Binding SaveToDBCommand}" Padding="20 10">Zapisz quiz do pliku .db</Button>
+            <Button Command="{Binding EditQuizCommand}" Padding="20 10" Margin="20 0 20 0">Edytuj quiz</Button>
+            <Button Command="{Binding NewQuizCommand}" Padding="20 10" Margin="20 0 20 0">Dodaj quiz</Button>
+            <Button Command="{Binding DeleteQuizCommand}" Padding="20 10">Usuń quiz</Button>
         </StackPanel>
-        
+
 
     </Grid>
 </UserControl>

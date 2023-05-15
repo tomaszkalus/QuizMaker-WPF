@@ -24,26 +24,23 @@
             Text="Filmy"
             FontSize="25"/>
 
-        <ListView Grid.Row="2" Margin="0 15 0 15" Height="250">
-            <ListViewItem/>
-            <ListViewItem/>
-            <ListViewItem/>
-            <ListViewItem/>
+        <ListView Grid.Row="2" Margin="0 15 0 15" Height="250" ItemsSource="{Binding Questions}">
+
 
             <ListView.View>
                 <GridView>
                     <GridViewColumn Header="Numer pytania" Width="Auto">
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
-                                <TextBlock Text="2" />
+                                <TextBlock Text="{Binding Order}" />
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>
 
-                    <GridViewColumn Header="Nazwa pytania" Width="Auto">
+                    <GridViewColumn Header="Nazwa pytania" Width="500" >
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
-                                <TextBlock Text="Ile lat ma Jezus?" />
+                                <TextBlock Text="{Binding Text}" />
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>
@@ -57,10 +54,10 @@
             Orientation="Horizontal"
             Grid.Row="3"
             HorizontalAlignment="Center">
-            <Button Margin="0 0 20 0">Wróć do quizów</Button>
-            <Button Margin="0 0 20 0">Dodaj pytanie</Button>
-            <Button Margin="0 0 20 0">Edytuj pytanie</Button>
-            <Button>Usuń pytanie</Button>
+            <Button Margin="0 0 20 0" Command="{Binding CancelQuestionsCommand}">Wróć do quizów</Button>
+            <Button Margin="0 0 20 0" Command="{Binding AddQuestionCommand}">Dodaj pytanie</Button>
+            <Button Margin="0 0 20 0" Command="{Binding EditQuestionCommand}">Edytuj pytanie</Button>
+            <Button Command="{Binding DeleteQuestionCommand}">Usuń pytanie</Button>
         </StackPanel>
 
 

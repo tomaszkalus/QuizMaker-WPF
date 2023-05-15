@@ -6,7 +6,13 @@ using System.Threading.Tasks;
 
 namespace QuizMaker.ViewModels
 {
-    internal class MainViewModel
+    public class MainViewModel : ViewModelBase
     {
+        public ViewModelBase CurrentViewModel { get; }
+        public MainViewModel()
+        {
+            CurrentViewModel = new QuizesListViewModel();
+            
+        }
     }
 }

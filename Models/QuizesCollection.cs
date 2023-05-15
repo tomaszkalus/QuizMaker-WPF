@@ -6,11 +6,11 @@ using System.Threading.Tasks;
 
 namespace QuizMaker.Models
 {
-    class Database
+    class QuizesCollection
     {
         private readonly List<Quiz> _quizes;
 
-        public Database(List<Quiz> quizes)
+        public QuizesCollection(List<Quiz> quizes)
         {
             _quizes = quizes;
         }

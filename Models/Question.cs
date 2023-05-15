@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace QuizMaker.Models
 {
-    class Question
+    public class Question
     {
         public Question(int questionID, string text, Answer[] answers, int order)
         {

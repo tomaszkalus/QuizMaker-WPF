@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace QuizMaker.Models
 {
-    class Answer
+    public class Answer
     {
         public int AnswerID { get; }
         public string Text;

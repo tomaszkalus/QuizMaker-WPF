@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace QuizMaker.Models
 {
-    class Quiz
+    public class Quiz
     {
         private readonly List<Question> _questions;
 
@@ -19,6 +19,8 @@ namespace QuizMaker.Models
 
         public int QuizID { get; }
         public string QuizName { get; set; }
+
+        public int NumberOfQuestions => _questions.Count;
 
     }
 }
