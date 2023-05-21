@@ -9,17 +9,21 @@ namespace QuizMaker.Models
 {
     public class Answer
     {
-        public int AnswerID { get; }
+        public int? AnswerID { get; }
         public string Text;
         public Boolean IsCorrect;
-        private int Field;
+        public int Field;
 
-        public Answer(int answerId, string text, bool isCorrect, int field)
+        public Answer(string text, bool isCorrect, int field, int? answerId = null)
         {
             AnswerID = answerId;
             Text = text;
             IsCorrect = isCorrect;
             Field = field;
+        }
+        public override string ToString()
+        {
+            return $"{AnswerID.ToString()} - {Text} - {IsCorrect.ToString()} - {Field.ToString()}";
         }
     }
 }

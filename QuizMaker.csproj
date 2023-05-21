@@ -7,4 +7,15 @@
     <UseWPF>true</UseWPF>
   </PropertyGroup>
 
+  <ItemGroup>
+    <Compile Remove="DB\Mappers\**" />
+    <EmbeddedResource Remove="DB\Mappers\**" />
+    <None Remove="DB\Mappers\**" />
+    <Page Remove="DB\Mappers\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="System.Data.SQLite" Version="1.0.117" />
+  </ItemGroup>
+
 </Project>

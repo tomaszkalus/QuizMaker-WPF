@@ -6,10 +6,11 @@ using System.Threading.Tasks;
 
 namespace QuizMaker.Commands
 {
-    public class NewQuizCommand : CommandBase
+    public class CreateNewQuizCommand : CommandBase
     {
         public override void Execute(object? parameter)
         {
+
             
         }
     }

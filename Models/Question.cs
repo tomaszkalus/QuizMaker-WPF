@@ -8,7 +8,7 @@ namespace QuizMaker.Models
 {
     public class Question
     {
-        public Question(int questionID, string text, Answer[] answers, int order)
+        public Question(string text, List<Answer> answers, int order, int? questionID = null)
         {
             QuestionID = questionID;
             Text = text;
@@ -16,10 +16,9 @@ namespace QuizMaker.Models
             Order = order;
         }
 
-
-        public int QuestionID { get; }
-        public string Text {get; set;}
-        public Answer[] Answers { get; set;}
-        public int Order { get; set;}
+        public int? QuestionID { get; }
+        public string Text { get; }
+        public List<Answer> Answers { get;}
+        public int Order { get;}
     }
 }

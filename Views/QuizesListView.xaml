@@ -47,9 +47,10 @@
             Grid.Row="2"
             HorizontalAlignment="Center">
             <Button Command="{Binding SaveToDBCommand}" Padding="20 10">Zapisz quiz do pliku .db</Button>
-            <Button Command="{Binding EditQuizCommand}" Padding="20 10" Margin="20 0 20 0">Edytuj quiz</Button>
-            <Button Command="{Binding NewQuizCommand}" Padding="20 10" Margin="20 0 20 0">Dodaj quiz</Button>
-            <Button Command="{Binding DeleteQuizCommand}" Padding="20 10">Usuń quiz</Button>
+            <Button Command="{Binding NewQuizCommand}" Padding="20 10" Margin="20 0 20 0">Dodaj nowy quiz</Button>
+            <Button Command="{Binding EditQuizCommand}" Padding="20 10">Edytuj quiz</Button>
+            <Button Command="{Binding DeleteQuizCommand}" Padding="20 10" Margin="20 0 20 0">Usuń quiz</Button>
+            
         </StackPanel>
 
 

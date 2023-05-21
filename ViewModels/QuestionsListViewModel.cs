@@ -22,9 +22,9 @@ namespace QuizMaker.ViewModels
         {
             _questions = new ObservableCollection<QuestionViewModel>();
 
-            _questions.Add(new QuestionViewModel(new Question(1, "Why did The Beatles broke up?", new Answer[4],1 )));
-            _questions.Add(new QuestionViewModel(new Question(2, "When was Nevermind released?", new Answer[4], 3)));
-            _questions.Add(new QuestionViewModel(new Question(1, "What's the best programming language?", new Answer[4], 2)));
+            //_questions.Add(new QuestionViewModel(new Question(1, "Why did The Beatles broke up?", new Answer[4],1 )));
+            //_questions.Add(new QuestionViewModel(new Question(2, "When was Nevermind released?", new Answer[4], 3)));
+            //_questions.Add(new QuestionViewModel(new Question(1, "What's the best programming language?", new Answer[4], 2)));
         }
     }
 }
