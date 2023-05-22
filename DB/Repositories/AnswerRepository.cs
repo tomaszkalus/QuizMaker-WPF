@@ -10,133 +10,92 @@ namespace QuizMaker.DB.Repositories
 {
     public class AnswerRepository : IAnswersRepository
     {
-        private readonly string _connectionString;
+        private readonly SQLiteConnection _connection;
 
-        public AnswerRepository(string connectionString) 
+        public AnswerRepository(SQLiteConnection connection)
         {
-            _connectionString = connectionString;
+            _connection = connection;
         }
 
-        public void AddAnswer(Answer answer, int questionId)
+
+        public void AddAnswer(Answer answer, int questionId, SQLiteTransaction transaction)
         {
-            using (SQLiteConnection connection = new SQLiteConnection(_connectionString))
+            string query = @"INSERT INTO answer(question_id,answer_text,answer_field,answer_is_correct)
+                            VALUES(@questionId, @text, @field, @is_correct)";
+
+            using (SQLiteCommand command = new SQLiteCommand(query, _connection, transaction))
             {
-                connection.Open();
-                string query = @"INSERT INTO Answer(Question_ID,Answer_Text,Answer_Field,Answer_IsCorrect)
-                                VALUES(@questionId, @text, @field, @is_correct)";
+                command.Parameters.AddWithValue("@questionId", questionId);
+                command.Parameters.AddWithValue("@text", answer.Text);
+                command.Parameters.AddWithValue("@field", answer.Field);
+                command.Parameters.AddWithValue("@is_correct", answer.IsCorrect ? 1 : 0);
 
-                using (SQLiteCommand command = new SQLiteCommand(query, connection))
-                {
-                    command.Parameters.AddWithValue("@questionId", questionId);
-                    command.Parameters.AddWithValue("@text", answer.Text);
-                    command.Parameters.AddWithValue("@field", answer.Field);
-                    command.Parameters.AddWithValue("@is_correct", answer.IsCorrect ? 1 : 0);
-
-                    try
-                    {
-                        command.ExecuteNonQuery();
-                    }
-                    catch (Exception ex)
-                    {
-                        throw new Exception(ex.Message);
-                    }
-                }
-            }
-        }
-
-        public void DeleteAnswer(Answer answer)
-        {
-            using (SQLiteConnection connection = new SQLiteConnection(_connectionString))
-            {
-                connection.Open();
-                string query = "DELETE FROM Answer WHERE Answer_ID = @Id";
-
-                using (SQLiteCommand command = new SQLiteCommand(query, connection))
-                {
-                    command.Parameters.AddWithValue("@Id", answer.AnswerID.ToString());
-                    try
-                    {
-                        command.ExecuteNonQuery();
-                    }
-                    catch (Exception ex)
-                    {
-                        throw new Exception(ex.Message);
-                    }
-                }
+                command.ExecuteNonQuery();
             }
         }
 
         public List<Answer> GetAnswersByQuestionID(int questionID)
         {
-            using (SQLiteConnection connection = new SQLiteConnection(_connectionString))
+
+            string query = @"
+            SELECT 
+            answer.answer_id,
+            answer.answer_text,
+            answer.answer_field,
+            answer.answer_is_correct
+            FROM answer
+            LEFT JOIN question
+            ON question.question_id = answer.question_id
+            WHERE question.question_id = @question_id";
+
+            using (SQLiteCommand command = new SQLiteCommand(query, _connection))
             {
-                connection.Open();
-                string query = @"
-                SELECT 
-                Answer.Answer_ID,
-                Answer.Answer_Text,
-                Answer.Answer_Field,
-                Answer.Answer_IsCorrect
-                FROM Answer
-                LEFT JOIN Question
-                ON Question.Question_ID = Answer.Question_ID
-                WHERE Question.Question_ID = @question_id";
+                command.Parameters.AddWithValue("@question_id", questionID);
 
-                using (SQLiteCommand command = new SQLiteCommand(query, connection))
+                List<Answer> answers = new List<Answer>();
+
+                using (SQLiteDataReader reader = command.ExecuteReader())
                 {
-                    command.Parameters.AddWithValue("@question_id", questionID);
-
-                    List<Answer> answers = new List<Answer>();
-
-                    using (SQLiteDataReader reader = command.ExecuteReader())
+                    while (reader.Read())
                     {
-                        while (reader.Read())
-                        {
-                            int id = (int)(long)reader["Answer_ID"];
-                            string text = (string)reader["Answer_Text"];
-                            int field = (int)(long)reader["Answer_Field"];
-                            bool isCorrect = Convert.ToBoolean((long)reader["Answer_IsCorrect"]);
+                        int id = (int)(long)reader["answer_id"];
+                        string text = (string)reader["answer_text"];
+                        int field = (int)(long)reader["answer_field"];
+                        bool isCorrect = Convert.ToBoolean((long)reader["answer_is_correct"]);
 
-                            Answer answer = new Answer(text, isCorrect, field, id);
-                            answers.Add(answer);
+                        Answer answer = new Answer(text, isCorrect, field, id);
+                        answers.Add(answer);
 
-                        }
                     }
-                    return answers;
                 }
+                return answers;
             }
+            
         }
 
-        public void UpdateAnswer(Answer answer)
+        public void UpdateAnswer(Answer answer, SQLiteTransaction transaction)
         {
-            using (SQLiteConnection connection = new SQLiteConnection(_connectionString))
-            {
-                connection.Open();
-                string query = @"
-                                UPDATE Answer
-                                SET
-                                Answer_Text = @text,
-                                Answer_Field = @field,
-                                Answer_IsCorrect = @is_correct
-                                WHERE
-                                Answer_ID = @answer_id";
+            string query = @"
+                            UPDATE Answer
+                            SET
+                            Answer_Text = @text,
+                            Answer_Field = @field,
+                            Answer_IsCorrect = @is_correct
+                            WHERE
+                            Answer_ID = @answer_id";
 
-                using (SQLiteCommand command = new SQLiteCommand(query, connection))
-                {
-                    command.Parameters.AddWithValue("@answer_id", answer.AnswerID.ToString());
-                    command.Parameters.AddWithValue("@text", answer.Text);
-                    command.Parameters.AddWithValue("@field", answer.Field);
-                    command.Parameters.AddWithValue("@is_correct", answer.IsCorrect ? 1 : 0);
-                    try
-                    {
-                        command.ExecuteNonQuery();
-                    }
-                    catch (Exception ex)
-                    {
-                        throw new Exception(ex.Message);
-                    }
-                }
+            using (SQLiteCommand command = new SQLiteCommand(query, _connection, transaction))
+            {
+                command.Parameters.AddWithValue("@answer_id", answer.AnswerID.ToString());
+                command.Parameters.AddWithValue("@text", answer.Text);
+                command.Parameters.AddWithValue("@field", answer.Field);
+                command.Parameters.AddWithValue("@is_correct", answer.IsCorrect ? 1 : 0);
+                command.ExecuteNonQuery();
+
             }
+            
         }
+
+
     }
 }

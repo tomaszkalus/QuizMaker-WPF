@@ -10,15 +10,15 @@ namespace QuizMaker.Models
     {
         private readonly List<Question> _questions;
 
-        public Quiz(List<Question> questions, int quizID, string quizName)
+        public Quiz(List<Question> questions, string quizName, int? quizID = null)
         {
             _questions = questions;
             QuizID = quizID;
             QuizName = quizName;
         }
 
-        public int QuizID { get; }
-        public string QuizName { get; set; }
+        public int? QuizID { get; }
+        public string QuizName { get; }
 
         public int NumberOfQuestions => _questions.Count;
 

@@ -22,9 +22,7 @@ namespace QuizMaker.DB.Repositories
         {
             using (SQLiteConnection connection = new SQLiteConnection(_connectionString))
             {
-
                 connection.Open();
-
                 using (var transaction = connection.BeginTransaction())
                 {
                     string insertQuestionQuery = @"INSERT INTO question(quiz_id, question_name, question_order)
@@ -38,23 +36,15 @@ namespace QuizMaker.DB.Repositories
                         questionCommand.ExecuteNonQuery();
                     }
 
-                    int lastId = (int)connection.LastInsertRowId;
-                    Trace.WriteLine(lastId.ToString());
+                    int questionId = (int)connection.LastInsertRowId;
 
-                    string insertAnswerQuery = @"INSERT INTO answer(question_id, answer_text, answer_field, answer_is_correct)
-                                            VALUES (@question_id, @answer_text, @answer_field, @answer_is_correct)";
+                    AnswerRepository answerRepository = new AnswerRepository(connection);
 
                     foreach (Answer answer in question.Answers)
                     {
-                        using (SQLiteCommand answerCommand = new SQLiteCommand(insertAnswerQuery, connection))
-                        {
-                            answerCommand.Parameters.AddWithValue("@question_id", lastId);
-                            answerCommand.Parameters.AddWithValue("@answer_text", answer.Text);
-                            answerCommand.Parameters.AddWithValue("@answer_field", answer.Field);
-                            answerCommand.Parameters.AddWithValue("@answer_is_correct", answer.IsCorrect ? 1 : 0);
-                            answerCommand.ExecuteNonQuery();
-                        }
+                        answerRepository.AddAnswer(answer, questionId, transaction);
                     }
+
                     transaction.Commit();
                 }
             }
@@ -83,71 +73,75 @@ namespace QuizMaker.DB.Repositories
 
         public Question GetQuestionByID(int questionId)
         {
-
-            Question question;
             string questionText;
             int questionOrder;
-
             List<Answer> answers = new List<Answer>();
-            int answerId;
-            string answerText;
-            int answerField;
-            bool answerIsCorrect;
 
             using (SQLiteConnection connection = new SQLiteConnection(_connectionString))
             {
                 connection.Open();
-                using (var transaction = connection.BeginTransaction())
+
+                string getQuestionCommand = @"SELECT *
+                                            FROM question
+                                            WHERE question_id = @question_id";
+
+                using (SQLiteCommand questionCommand = new SQLiteCommand(getQuestionCommand, connection))
                 {
-                    string getQuestionCommand = @"SELECT *
-                                                FROM question
-                                                WHERE question_id = @question_id";
+                    questionCommand.Parameters.AddWithValue("@question_id", questionId);
+                    SQLiteDataReader questionReader = questionCommand.ExecuteReader();
+                    questionReader.Read();
 
-                    using (SQLiteCommand questionCommand = new SQLiteCommand(getQuestionCommand, connection))
+                    questionText = (string)questionReader["question_name"];
+                    questionOrder = (int)(long)questionReader["question_order"];
+                }
+
+                AnswerRepository answerRepository = new AnswerRepository(connection);
+                answers = answerRepository.GetAnswersByQuestionID(questionId);
+            }
+
+            return new Question(questionText, answers, questionOrder, questionId);
+        }
+
+        public List<Question> GetQuestionByQuizId(int quizId)
+        {
+            List<Question> questions = new List<Question>();
+
+            using (SQLiteConnection connection = new SQLiteConnection(_connectionString))
+            {
+                connection.Open();
+                string getQuestionByQuizIdCommand = @"SELECT 
+                                                    question.question_ID,
+                                                    question.question_Name,
+                                                    question.question_Order
+                                                    FROM question
+                                                    JOIN quiz
+                                                    ON quiz.quiz_ID = question.quiz_ID
+                                                    WHERE quiz.quiz_ID = @quiz_id";
+
+
+                using (SQLiteCommand questionCommand = new SQLiteCommand(getQuestionByQuizIdCommand, connection))
+                {
+                    questionCommand.Parameters.AddWithValue("@quiz_id", quizId);
+                    SQLiteDataReader questionReader = questionCommand.ExecuteReader();
+                    string questionText;
+                    int questionOrder;
+                    int questionId;
+                    List<Answer> answers = new List<Answer>();
+                    AnswerRepository answerRepository = new AnswerRepository(connection);
+                    while (questionReader.Read())
                     {
-                        questionCommand.Parameters.AddWithValue("@question_id", questionId);
-                        SQLiteDataReader questionReader = questionCommand.ExecuteReader();
-                        questionReader.Read();
-
+                        questionId = (int)(long)questionReader["question_id"];
                         questionText = (string)questionReader["question_name"];
                         questionOrder = (int)(long)questionReader["question_order"];
+                        
+                        answers = answerRepository.GetAnswersByQuestionID(questionId);
+                        questions.Add(new Question(questionText, answers, questionOrder, questionId));
                     }
-
-
-                    string getAnswersCommand = @"SELECT 
-                                                answer.answer_id,
-                                                answer.answer_text,
-                                                answer.answer_field,
-                                                answer.answer_is_correct
-                                                FROM answer
-                                                LEFT JOIN question
-                                                ON question.question_ID = answer.question_ID
-                                                WHERE question.question_ID = @question_id";
-
-                    using (SQLiteCommand answersCommand = new SQLiteCommand(getAnswersCommand, connection))
-                    {
-                        answersCommand.Parameters.AddWithValue("@question_id", questionId);
-                        SQLiteDataReader answersReader = answersCommand.ExecuteReader();
-
-                        while (answersReader.Read())
-                        {
-                            answerId = (int)(long)answersReader["answer_id"];
-                            answerText = (string)answersReader["answer_text"];
-                            answerField = (int)(long)answersReader["answer_field"];
-                            answerIsCorrect = Convert.ToBoolean((long)answersReader["answer_is_correct"]);
-
-                            Answer answer = new Answer(answerText, answerIsCorrect, answerField, answerId);
-                            answers.Add(answer);
-                        }
-                    }
-                    transaction.Commit();
                 }
             }
-            question = new Question(questionText, answers, questionOrder, questionId);
-            return question;
-
-
+            return questions;
         }
+
 
         public void UpdateQuestion(Question question)
         {

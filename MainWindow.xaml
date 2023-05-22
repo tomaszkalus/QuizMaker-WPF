@@ -5,10 +5,29 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:QuizMaker" 
         xmlns:views="clr-namespace:QuizMaker.Views"
+        xmlns:vms="clr-namespace:QuizMaker.ViewModels"
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
     <Grid>
-        <views:QuizesListView DataContext="{Binding CurrentViewModel}"/>
+        <Grid.Resources>
+            <DataTemplate DataType="{x:Type vms:StartPageViewModel}">
+                <views:StartPageView/>
+            </DataTemplate>
+
+            <DataTemplate DataType="{x:Type vms:QuestionsListViewModel}">
+                <views:QuestionsListView/>
+            </DataTemplate>
+
+            <DataTemplate DataType="{x:Type vms:QuizesListViewModel}">
+                <views:QuizesListView/>
+            </DataTemplate>
+
+            <DataTemplate DataType="{x:Type vms:AnswersEditViewModel}">
+                <views:AnswersEditView/>
+            </DataTemplate>
+        </Grid.Resources>
+
+        <ContentControl Content="{Binding CurrentViewModel}"/>
 
     </Grid>
 </Window>
