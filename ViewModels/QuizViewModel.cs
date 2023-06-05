@@ -12,6 +12,7 @@ namespace QuizMaker.ViewModels
         private readonly Quiz _quiz;
         public string QuizName => _quiz.QuizName;
         public string NumberOfQuestions => _quiz.NumberOfQuestions.ToString();
+        public string QuizId => _quiz.QuizId.ToString();
 
         public QuizViewModel(Quiz quiz)
         {

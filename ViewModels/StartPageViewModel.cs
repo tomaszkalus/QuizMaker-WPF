@@ -1,10 +1,6 @@
 ﻿using QuizMaker.Commands;
-using QuizMaker.Stores;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using QuizMaker.Models;
+using QuizMaker.Services;
 using System.Windows.Input;
 
 namespace QuizMaker.ViewModels
@@ -14,11 +10,10 @@ namespace QuizMaker.ViewModels
         public ICommand CreateDatabaseCommand { get; }
         public ICommand OpenDatabaseCommand { get; }
 
-        public StartPageViewModel(NavigationStore navigationStore, Func<ViewModelBase> createViewModel )
+        public StartPageViewModel(QuizCollection quizCollection, string databasePath, NavigationService createQuizesListViewModel)
         {
-            CreateDatabaseCommand = new CreateDatabaseCommand();
-            OpenDatabaseCommand = new NavigateCommand(navigationStore, createViewModel);
-
+            CreateDatabaseCommand = new NavigateCommand(createQuizesListViewModel);
+            OpenDatabaseCommand = new OpenDatabaseCommand(quizCollection, databasePath, createQuizesListViewModel);
         }
     }
 }

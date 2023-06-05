@@ -8,17 +8,34 @@ namespace QuizMaker.Models
 {
     public class Question
     {
-        public Question(string text, List<Answer> answers, int order, int? questionID = null)
+        private static int nrOfInstances = 0;
+        private readonly int _questionId;
+        public int QuestionId => _questionId;
+
+        public Question(string text, List<Answer> answers, int order)
         {
-            QuestionID = questionID;
+            // Assigning a new unique ID for each question
+            _questionId = Question.nrOfInstances;
+            Question.nrOfInstances++;
+
             Text = text;
             Answers = answers;
             Order = order;
         }
 
-        public int? QuestionID { get; }
         public string Text { get; }
         public List<Answer> Answers { get;}
         public int Order { get;}
+
+        internal bool Conflicts(Question question)
+        {
+            if (question.Text == Text)
+            {
+                return false;
+            }
+            return true;
+        }
+
+
     }
 }

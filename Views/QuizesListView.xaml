@@ -18,13 +18,13 @@
             Text="Quizy"
             FontSize="25"/>
 
-        <ListView Grid.Row="1" Margin="0 15 0 15" Height="250" ItemsSource="{Binding Quizes}">
+        <ListView Grid.Row="1" Margin="0 15 0 15" Height="250" ItemsSource="{Binding Quizes}" SelectedItem="{Binding SelectedQuiz}">
             <ListView.View>
                 <GridView>
                     <GridViewColumn Header="Nazwa quizu">
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
-                                <TextBlock Text="{Binding QuizName}" />
+                                <TextBlock Text="{Binding QuizName}" Tag="{Binding QuizId}"/>
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>
@@ -46,8 +46,9 @@
             Orientation="Horizontal"
             Grid.Row="2"
             HorizontalAlignment="Center">
-            <Button Command="{Binding SaveToDBCommand}" Padding="20 10">Zapisz quiz do pliku .db</Button>
+            <Button Command="{Binding SaveToDBCommand}" Padding="20 10">Zapisz quizy do pliku .db</Button>
             <Button Command="{Binding NewQuizCommand}" Padding="20 10" Margin="20 0 20 0">Dodaj nowy quiz</Button>
+            
             <Button Command="{Binding EditQuizCommand}" Padding="20 10">Edytuj quiz</Button>
             <Button Command="{Binding DeleteQuizCommand}" Padding="20 10" Margin="20 0 20 0">Usuń quiz</Button>
             

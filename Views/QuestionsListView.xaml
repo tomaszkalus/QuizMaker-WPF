@@ -21,10 +21,10 @@
         
         <TextBlock 
             Grid.Row="1"
-            Text="Filmy"
+            Text="{Binding QuizName}"
             FontSize="25"/>
 
-        <ListView Grid.Row="2" Margin="0 15 0 15" Height="250" ItemsSource="{Binding Questions}">
+        <ListView Grid.Row="2" Margin="0 15 0 15" Height="250" ItemsSource="{Binding Questions}" SelectedItem="{Binding SelectedQuestion}">
 
 
             <ListView.View>
@@ -40,7 +40,7 @@
                     <GridViewColumn Header="Nazwa pytania" Width="500" >
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
-                                <TextBlock Text="{Binding Text}" />
+                                <TextBlock Text="{Binding Text}" Tag="{Binding QuestionId}" />
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>
@@ -54,10 +54,10 @@
             Orientation="Horizontal"
             Grid.Row="3"
             HorizontalAlignment="Center">
-            <Button Margin="0 0 20 0" Command="{Binding CancelQuestionsCommand}">Wróć do quizów</Button>
-            <Button Margin="0 0 20 0" Command="{Binding AddQuestionCommand}">Dodaj pytanie</Button>
-            <Button Margin="0 0 20 0" Command="{Binding EditQuestionCommand}">Edytuj pytanie</Button>
-            <Button Command="{Binding DeleteQuestionCommand}">Usuń pytanie</Button>
+            <Button Margin="0 0 20 0" Padding="20 10" Command="{Binding BackToQuizesCommand}">Wróć do quizów</Button>
+            <Button Margin="0 0 20 0" Padding="20 10" Command="{Binding AddQuestionCommand}">Dodaj pytanie</Button>
+            <Button Margin="0 0 20 0" Padding="20 10" Command="{Binding EditQuestionCommand}">Edytuj pytanie</Button>
+            <Button Padding="20 10" Command="{Binding DeleteQuestionCommand}">Usuń pytanie</Button>
         </StackPanel>
 
 

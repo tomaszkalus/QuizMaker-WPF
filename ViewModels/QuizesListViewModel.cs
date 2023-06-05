@@ -1,39 +1,69 @@
 ﻿using QuizMaker.Commands;
 using QuizMaker.Models;
+using QuizMaker.Services;
 using QuizMaker.Stores;
-using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Linq;
-using System.Runtime.CompilerServices;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Input;
 
 namespace QuizMaker.ViewModels
 {
     public class QuizesListViewModel : ViewModelBase
     {
+        private readonly QuizCollection _quizCollection;
+        private readonly QuizStore _quizStore;
         private readonly ObservableCollection<QuizViewModel> _quizes;
-        private readonly NavigationStore _navigationStore;
+        private QuizViewModel _selectedQuiz;
         public IEnumerable<QuizViewModel> Quizes => _quizes;
         public ICommand SaveToDBCommand { get; }
         public ICommand NewQuizCommand { get; }
         public ICommand DeleteQuizCommand { get; }
         public ICommand EditQuizCommand { get; }
 
-        public QuizesListViewModel(NavigationStore navigationStore)
+        public QuizViewModel SelectedQuiz
         {
-            NewQuizCommand = new CreateNewQuizCommand();
-            _navigationStore = navigationStore;
+            get { return _selectedQuiz; }
+            set
+            {
+                _selectedQuiz = value;
+                OnPropertyChanged(nameof(SelectedQuiz));
+            }
+        }
 
+        public QuizesListViewModel(QuizCollection quizCollection, QuizStore quizStore, string dbPath, NavigationService createQuizNameEditViewModel, NavigationService createQuestionsListViewModel)
+        {
+            _quizCollection = quizCollection;
+            _quizStore = quizStore;
+            _quizes = new ObservableCollection<QuizViewModel>();
 
-            //_quizes = new ObservableCollection<QuizViewModel>();
-            //_quizes.Add(new QuizViewModel(new Models.Quiz(new List<Question>(), 1, "Filmy")));
-            //_quizes.Add(new QuizViewModel(new Models.Quiz(new List<Question>(), 2, "Muzyka")));
-            //_quizes.Add(new QuizViewModel(new Models.Quiz(new List<Question>(), 3, "Programowanie")));
-            //_quizes.Add(new QuizViewModel(new Models.Quiz(new List<Question>(), 4, "Historia")));
+            NewQuizCommand = new NavigateCommand(createQuizNameEditViewModel);
+            EditQuizCommand = new EditQuizCommand(this, _quizCollection, createQuestionsListViewModel, _quizStore);
+            DeleteQuizCommand = new DeleteQuizCommand(this, _quizCollection, UpdateQuizes);
 
+            UpdateQuizes();
+
+        }
+
+        private void UpdateQuizes()
+        {
+            _quizes.Clear();
+            foreach (var quiz in _quizCollection.GetAllQuizes())
+            {
+                QuizViewModel quizViewModel = new QuizViewModel(quiz);
+                _quizes.Add(quizViewModel);
+            }
+        }
+
+        private void LoadQuizes(string databasePath)
+        {
+            //string connString = $"Data Source={databasePath};Version=3";
+            //QuizRepository quizRepository = new QuizRepository(connString);
+            //List<Quiz> quizes = quizRepository.GetAllQuizes();
+            //foreach (Quiz quiz in quizes)
+            //{
+            //    _quizCollection.AddQuiz(quiz);
+            //    _quizes.Add(new QuizViewModel(quiz));
+            //}
         }
 
     }

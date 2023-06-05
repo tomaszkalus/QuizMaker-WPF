@@ -33,26 +33,26 @@ namespace QuizMaker.DB.Repositories
             }
         }
 
-        public void DeleteQuiz(Quiz quiz)
-        {
-            using (SQLiteConnection connection = new SQLiteConnection(_connectionString))
-            {
-                connection.Open();
+        //public void DeleteQuiz(Quiz quiz)
+        //{
+        //    using (SQLiteConnection connection = new SQLiteConnection(_connectionString))
+        //    {
+        //        connection.Open();
 
-                using (SQLiteCommand pragmaCommand = new SQLiteCommand("PRAGMA foreign_keys=on", connection))
-                {
-                    pragmaCommand.ExecuteNonQuery();
-                }
+        //        using (SQLiteCommand pragmaCommand = new SQLiteCommand("PRAGMA foreign_keys=on", connection))
+        //        {
+        //            pragmaCommand.ExecuteNonQuery();
+        //        }
 
-                string questionDeleteQuery = "DELETE FROM quiz WHERE quiz_id = @Id";
-                using (SQLiteCommand command = new SQLiteCommand(questionDeleteQuery, connection))
-                {
-                    command.Parameters.AddWithValue("@Id", quiz.QuizID);
-                    command.ExecuteNonQuery();
+        //        string questionDeleteQuery = "DELETE FROM quiz WHERE quiz_id = @Id";
+        //        using (SQLiteCommand command = new SQLiteCommand(questionDeleteQuery, connection))
+        //        {
+        //            command.Parameters.AddWithValue("@Id", quiz.QuizID);
+        //            command.ExecuteNonQuery();
 
-                }
-            }
-        }
+        //        }
+        //    }
+        //}
 
 
         public List<Quiz> GetAllQuizes()

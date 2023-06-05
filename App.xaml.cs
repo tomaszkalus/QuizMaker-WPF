@@ -1,18 +1,9 @@
-﻿using QuizMaker.DB;
-using QuizMaker.DB.Repositories;
-using QuizMaker.Models;
+﻿using QuizMaker.Models;
+using QuizMaker.Services;
 using QuizMaker.Stores;
 using QuizMaker.ViewModels;
-using System;
 using System.Collections.Generic;
-using System.Configuration;
-using System.Data;
-using System.Data.SQLite;
-using System.Diagnostics;
-using System.Linq;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Documents;
 
 namespace QuizMaker
 {
@@ -22,32 +13,28 @@ namespace QuizMaker
     public partial class App : Application
     {
         private readonly NavigationStore _navigationStore;
+        private readonly QuizCollection _quizCollection;
+        private readonly QuestionStore _questionStore;
+        private readonly QuizStore _quizStore;
+        private string _dbPath;
 
         public App()
         {
             _navigationStore = new NavigationStore();
-            
+            _quizStore = new QuizStore();
+            _quizCollection = new QuizCollection(new List<Quiz>());
+            _questionStore = new QuestionStore();
+
+            _dbPath = null;
         }
 
         protected override void OnStartup(StartupEventArgs e)
         {
             #region testing
-            //string conn_string = ConfigurationManager.ConnectionStrings["ConnectionString"].ConnectionString;
-            //List<Answer> answer_list = new List<Answer>();
-            //Answer answer1 = new Answer("test odp01", true, 1);
-            //Answer answer2 = new Answer("test odp02", false, 2);
-            //Answer answer3 = new Answer("test odp03", false, 3);
-            //Answer answer4 = new Answer("test odp04", false, 4);
-            //answer_list.Add(answer1); answer_list.Add(answer2); answer_list.Add(answer3); answer_list.Add(answer4);
 
-            //Question question = new Question("test pytanie 01", answer_list, 3);
-            //QuestionRepository questionRepository = new QuestionRepository(conn_string);
-
-            //QuizRepository quizRepo = new QuizRepository(conn_string);
-            //List<Quiz> quizes = quizRepo.GetAllQuizes();
             #endregion
 
-            _navigationStore.CurrentViewModel = new StartPageViewModel(_navigationStore, CreateQuizesListViewModel);
+            _navigationStore.CurrentViewModel = CreateStartPageViewModel();
 
             MainWindow = new MainWindow()
             {
@@ -62,16 +49,24 @@ namespace QuizMaker
 
         private QuizesListViewModel CreateQuizesListViewModel()
         {
-            return new QuizesListViewModel(_navigationStore);
+            return new QuizesListViewModel(_quizCollection, _quizStore, _dbPath, new NavigationService(_navigationStore, CreateQuizNameEditViewModel), new NavigationService(_navigationStore, CreateQuestionsListViewModel));
         }
 
         private QuestionsListViewModel CreateQuestionsListViewModel()
         {
-            return new QuestionsListViewModel();
+            return new QuestionsListViewModel(_quizStore, _questionStore, new NavigationService(_navigationStore, CreateAnswersEditViewModel), new NavigationService(_navigationStore, CreateQuizesListViewModel));
         }
         private AnswersEditViewModel CreateAnswersEditViewModel()
         {
-            return new AnswersEditViewModel();
+            return new AnswersEditViewModel(_quizStore, _questionStore, new NavigationService(_navigationStore, CreateQuestionsListViewModel));
+        }
+        private StartPageViewModel CreateStartPageViewModel()
+        {
+            return new StartPageViewModel(_quizCollection, _dbPath, new NavigationService(_navigationStore, CreateQuizesListViewModel));
+        }
+        private QuizNameEditViewModel CreateQuizNameEditViewModel()
+        {
+            return new QuizNameEditViewModel(_quizStore, _quizCollection, new NavigationService(_navigationStore, CreateQuizesListViewModel), new NavigationService(_navigationStore, CreateQuestionsListViewModel));
         }
 
 

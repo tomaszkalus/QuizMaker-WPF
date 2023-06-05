@@ -13,13 +13,13 @@ namespace QuizMaker.DB
 {
     public class DataAccess
     {
-        private SQLiteConnection _connString = new SQLiteConnection(ConfigurationManager.ConnectionStrings["ConnectionString"].ConnectionString);
+        private SQLiteConnection _connection = new SQLiteConnection(ConfigurationManager.ConnectionStrings["ConnectionString"].ConnectionString);
 
         public DataTable FetchData(string query)
         {
             SQLiteCommand command;
             var dataset = new DataTable();
-            using (var conn = new SQLiteConnection(_connString))
+            using (var conn = new SQLiteConnection(_connection))
             {
                 conn.Open();
                 command = new SQLiteCommand(query, conn);
@@ -29,6 +29,12 @@ namespace QuizMaker.DB
                 return dataset;
                 
             }
+        }
+
+        public DataAccess(string databasePath) 
+        {
+            string connString = $"Data Source={databasePath};Version=3";
+            _connection = new SQLiteConnection(connString);
         }
 
 

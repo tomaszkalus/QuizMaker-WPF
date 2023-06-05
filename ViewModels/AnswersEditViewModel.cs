@@ -1,15 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using QuizMaker.Commands;
+using QuizMaker.Models;
+using QuizMaker.Services;
+using QuizMaker.Stores;
 using System.Windows.Input;
 
 namespace QuizMaker.ViewModels
 {
     public class AnswersEditViewModel : ViewModelBase
     {
-
+        #region parameters_init 
         // Question Name
         private string _questionName;
         public string QuestionName
@@ -155,14 +154,53 @@ namespace QuizMaker.ViewModels
                 OnPropertyChanged(nameof(Answer4Correct));
             }
         }
+        #endregion
+
 
         // Commands
         public ICommand CancelAnswersCommand { get; }
-
         public ICommand SaveAnswersCommand { get; }
+        public ICommand ValidateNumericInputCommand { get; }
+        private readonly QuestionStore _questionStore;
 
-        public AnswersEditViewModel()
+
+        public AnswersEditViewModel(QuizStore quizStore, QuestionStore questionStore, NavigationService createQuestionsListViewModel)
         {
+            _questionStore = questionStore;
+            QuestionOrder = quizStore.CurrentQuiz.NumberOfQuestions + 1;
+            UpdateData();
+
+            CancelAnswersCommand = new CancelEditQuestionCommand(createQuestionsListViewModel, questionStore);
+            SaveAnswersCommand = new SaveQuestionCommand(this, quizStore, questionStore, createQuestionsListViewModel);
+        }
+
+        private void UpdateData()
+        {
+            // Load the edited question if specified
+            if (_questionStore.CurrentQuestion != null)
+            {
+                Question editedQuestion = _questionStore.CurrentQuestion;
+
+                QuestionName = editedQuestion.Text;
+                QuestionOrder = editedQuestion.Order;
+
+                Answer answer1 = editedQuestion.Answers[0];
+                Answer1Text = answer1.Text;
+                Answer1Correct = answer1.IsCorrect;
+
+                Answer answer2 = editedQuestion.Answers[1];
+                Answer2Text = answer2.Text;
+                Answer2Correct = answer2.IsCorrect;
+
+                Answer answer3 = editedQuestion.Answers[2];
+                Answer3Text = answer3.Text;
+                Answer3Correct = answer3.IsCorrect;
+
+                Answer answer4 = editedQuestion.Answers[3];
+                Answer4Text = answer4.Text;
+                Answer4Correct = answer4.IsCorrect;
+
+            }
 
         }
     }

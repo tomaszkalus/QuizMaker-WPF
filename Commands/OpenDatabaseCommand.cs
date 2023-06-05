@@ -1,14 +1,24 @@
-﻿using System;
+﻿using QuizMaker.Models;
+using QuizMaker.Services;
 using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace QuizMaker.Commands
 {
     public class OpenDatabaseCommand : CommandBase
     {
+        private NavigationService _createQuestionsListViewModel;
+        private QuizCollection _quizCollection;
+        private string _databasePath;
+
+        public OpenDatabaseCommand(QuizCollection quizCollection, string databasePath, NavigationService createQuestionsListViewModel)
+        {
+            _createQuestionsListViewModel = createQuestionsListViewModel;
+            _quizCollection = quizCollection;
+            _databasePath = databasePath;
+
+
+
+        }
         public override void Execute(object? parameter)
         {
             var dialog = new Microsoft.Win32.OpenFileDialog();
@@ -18,13 +28,27 @@ namespace QuizMaker.Commands
 
             bool? result = dialog.ShowDialog();
 
-            if (result == true) 
+            if (result == false)
             {
-                // Open document
-                string filename = dialog.FileName;
-                Trace.WriteLine(filename);
+                return;
             }
 
+            _databasePath = dialog.FileName;
+
+            loadQuizes(_databasePath);
+
+            //_navigationStore.CurrentViewModel = new QuizesListViewModel(_quizCollection);
+            _createQuestionsListViewModel.Navigate();
+        }
+
+        private void loadQuizes(string filename)
+        {
+            //QuizRepository quizRepository = new QuizRepository($"Data Source={filename};Version=3");
+            //List<Quiz> quizes = quizRepository.GetAllQuizes();
+            //foreach (var quiz in quizes)
+            //{
+            //    _quizCollection.AddQuiz(quiz);
+            //}
         }
     }
 }
