@@ -29,7 +29,7 @@
 
             <ListView.View>
                 <GridView>
-                    <GridViewColumn Header="Numer pytania" Width="Auto">
+                    <GridViewColumn Header="Numer pytania" Width="100">
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
                                 <TextBlock Text="{Binding Order}" />
@@ -37,15 +37,13 @@
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>
 
-                    <GridViewColumn Header="Nazwa pytania" Width="500" >
+                    <GridViewColumn Header="Nazwa pytania" Width="600" >
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
                                 <TextBlock Text="{Binding Text}" Tag="{Binding QuestionId}" />
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>
-
-
                 </GridView>
             </ListView.View>
         </ListView>

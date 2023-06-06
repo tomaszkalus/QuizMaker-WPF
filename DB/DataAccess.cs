@@ -1,41 +1,42 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Data.SQLite;
-using System.Text;
-using System.Threading.Tasks;
-using System.Diagnostics;
-using System.Configuration;
+﻿using System.Configuration;
 using System.Data;
-using System.Data.SqlClient;
+using System.Data.SQLite;
 
 namespace QuizMaker.DB
 {
     public class DataAccess
     {
         private SQLiteConnection _connection = new SQLiteConnection(ConfigurationManager.ConnectionStrings["ConnectionString"].ConnectionString);
+        private string _databasePath;
 
-        public DataTable FetchData(string query)
+        public SQLiteConnection Connection => _connection;
+
+        public DataAccess(string databasePath)
         {
-            SQLiteCommand command;
-            var dataset = new DataTable();
-            using (var conn = new SQLiteConnection(_connection))
-            {
-                conn.Open();
-                command = new SQLiteCommand(query, conn);
-                var adapter = new SQLiteDataAdapter(command);
-                adapter.Fill(dataset);
-                conn.Close();
-                return dataset;
-                
-            }
+            _connection = new SQLiteConnection($"Data Source={databasePath};Version=3");
+            _databasePath = databasePath;
+            CreateDatabase();
         }
 
-        public DataAccess(string databasePath) 
+        private void CreateDatabase()
         {
-            string connString = $"Data Source={databasePath};Version=3";
-            _connection = new SQLiteConnection(connString);
+            SQLiteConnection.CreateFile(_databasePath);
+
+            _connection.Open();
+
+            SQLiteCommand createQuizTableCommand = new SQLiteCommand(Resources.CreateDatabaseSql.CreateQuizTable, _connection);
+            SQLiteCommand createQuestionTableCommand = new SQLiteCommand(Resources.CreateDatabaseSql.CreateQuestionsTable, _connection);
+            SQLiteCommand createAnswerTableCommand = new SQLiteCommand(Resources.CreateDatabaseSql.CreateAnswersTable, _connection);
+
+            createQuizTableCommand.ExecuteNonQuery();
+            createQuestionTableCommand.ExecuteNonQuery();
+            createAnswerTableCommand.ExecuteNonQuery();
+
+            _connection.Close();
         }
+
+
+
 
 
     }

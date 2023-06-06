@@ -2,6 +2,7 @@
 using QuizMaker.Models;
 using QuizMaker.Services;
 using QuizMaker.Stores;
+using System;
 using System.Windows.Input;
 
 namespace QuizMaker.ViewModels
@@ -184,24 +185,35 @@ namespace QuizMaker.ViewModels
                 QuestionName = editedQuestion.Text;
                 QuestionOrder = editedQuestion.Order;
 
-                Answer answer1 = editedQuestion.Answers[0];
-                Answer1Text = answer1.Text;
-                Answer1Correct = answer1.IsCorrect;
 
-                Answer answer2 = editedQuestion.Answers[1];
-                Answer2Text = answer2.Text;
-                Answer2Correct = answer2.IsCorrect;
+                if (editedQuestion.Answers.Count > 0)
+                {
+                    Answer answer1 = editedQuestion.Answers[0] ?? new Answer("", false, 1);
+                    Answer1Text = answer1.Text;
+                    Answer1Correct = answer1.IsCorrect;
+                }
 
-                Answer answer3 = editedQuestion.Answers[2];
-                Answer3Text = answer3.Text;
-                Answer3Correct = answer3.IsCorrect;
+                if (editedQuestion.Answers.Count > 1)
+                {
+                    Answer answer2 = editedQuestion.Answers[1] ?? new Answer("", false, 2);
+                    Answer2Text = answer2.Text;
+                    Answer2Correct = answer2.IsCorrect;
+                }
 
-                Answer answer4 = editedQuestion.Answers[3];
-                Answer4Text = answer4.Text;
-                Answer4Correct = answer4.IsCorrect;
+                if (editedQuestion.Answers.Count > 2)
+                {
+                    Answer answer3 = editedQuestion.Answers[2] ?? new Answer("", false, 3);
+                    Answer3Text = answer3.Text;
+                    Answer3Correct = answer3.IsCorrect;
+                }
 
+                if (editedQuestion.Answers.Count > 3)
+                {
+                    Answer answer4 = editedQuestion.Answers[3] ?? new Answer("", false, 4);
+                    Answer4Text = answer4.Text;
+                    Answer4Correct = answer4.IsCorrect;
+                }
             }
-
         }
     }
 }

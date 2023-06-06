@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 
 namespace QuizMaker.Models
 {
@@ -24,6 +25,22 @@ namespace QuizMaker.Models
 
         public void AddQuestion(Question question)
         {
+            List<Question> sortedQuestions = _questions.OrderBy(q => q.Order).ToList();
+
+            bool isOverlapping = false;
+
+            foreach (var quizQuestion in sortedQuestions)
+            {
+                if(quizQuestion.Order == question.Order)
+                {
+                    isOverlapping = true;
+                }
+                if(isOverlapping)
+                {
+                    quizQuestion.IncrementOrder();
+                }
+
+            }
             _questions.Add(question);
         }
 

@@ -21,7 +21,7 @@
         <ListView Grid.Row="1" Margin="0 15 0 15" Height="250" ItemsSource="{Binding Quizes}" SelectedItem="{Binding SelectedQuiz}">
             <ListView.View>
                 <GridView>
-                    <GridViewColumn Header="Nazwa quizu">
+                    <GridViewColumn Header="Nazwa quizu" Width="400">
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
                                 <TextBlock Text="{Binding QuizName}" Tag="{Binding QuizId}"/>
@@ -29,7 +29,7 @@
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>
 
-                    <GridViewColumn Header="Ilość pytań">
+                    <GridViewColumn Header="Ilość pytań" Width="100">
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
                                 <TextBlock Text="{Binding NumberOfQuestions}" />

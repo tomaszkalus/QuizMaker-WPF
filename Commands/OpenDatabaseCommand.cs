@@ -1,6 +1,8 @@
-﻿using QuizMaker.Models;
+﻿using QuizMaker.DB.Repositories;
+using QuizMaker.Models;
 using QuizMaker.Services;
 using System.Collections.Generic;
+using System.Data.SQLite;
 
 namespace QuizMaker.Commands
 {
@@ -34,21 +36,20 @@ namespace QuizMaker.Commands
             }
 
             _databasePath = dialog.FileName;
-
             loadQuizes(_databasePath);
-
-            //_navigationStore.CurrentViewModel = new QuizesListViewModel(_quizCollection);
             _createQuestionsListViewModel.Navigate();
         }
 
         private void loadQuizes(string filename)
         {
-            //QuizRepository quizRepository = new QuizRepository($"Data Source={filename};Version=3");
-            //List<Quiz> quizes = quizRepository.GetAllQuizes();
-            //foreach (var quiz in quizes)
-            //{
-            //    _quizCollection.AddQuiz(quiz);
-            //}
+            SQLiteConnection connection = new SQLiteConnection($"Data Source={filename};Version=3");
+            connection.Open();
+            QuizRepository quizRepository = new QuizRepository();
+            List<Quiz> quizes = quizRepository.GetAllQuizes(connection);
+            foreach (var quiz in quizes)
+            {
+                _quizCollection.AddQuiz(quiz);
+            }
         }
     }
 }

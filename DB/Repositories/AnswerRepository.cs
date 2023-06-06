@@ -8,22 +8,14 @@ using System.Threading.Tasks;
 
 namespace QuizMaker.DB.Repositories
 {
-    public class AnswerRepository : IAnswersRepository
+    public class AnswerRepository
     {
-        private readonly SQLiteConnection _connection;
-
-        public AnswerRepository(SQLiteConnection connection)
+        public void AddAnswer(Answer answer, long questionId, SQLiteConnection connection)
         {
-            _connection = connection;
-        }
-
-
-        public void AddAnswer(Answer answer, int questionId, SQLiteTransaction transaction)
-        {
-            string query = @"INSERT INTO answer(question_id,answer_text,answer_field,answer_is_correct)
+            string query = @"INSERT INTO Answer(Question_ID,Answer_Text,Answer_Field,Answer_IsCorrect)
                             VALUES(@questionId, @text, @field, @is_correct)";
 
-            using (SQLiteCommand command = new SQLiteCommand(query, _connection, transaction))
+            using (SQLiteCommand command = new SQLiteCommand(query, connection))
             {
                 command.Parameters.AddWithValue("@questionId", questionId);
                 command.Parameters.AddWithValue("@text", answer.Text);
@@ -34,21 +26,21 @@ namespace QuizMaker.DB.Repositories
             }
         }
 
-        public List<Answer> GetAnswersByQuestionID(int questionID)
+        public List<Answer> GetAnswersByQuestionID(int questionID, SQLiteConnection connection)
         {
 
             string query = @"
             SELECT 
-            answer.answer_id,
-            answer.answer_text,
-            answer.answer_field,
-            answer.answer_is_correct
-            FROM answer
-            LEFT JOIN question
-            ON question.question_id = answer.question_id
-            WHERE question.question_id = @question_id";
+            Answer.Answer_ID,
+            Answer.Answer_Text,
+            Answer.Answer_Field,
+            Answer.Answer_IsCorrect
+            FROM Answer
+            LEFT JOIN Question
+            ON Question.Question_ID = Answer.Question_ID
+            WHERE Question.Question_ID = @question_id";
 
-            using (SQLiteCommand command = new SQLiteCommand(query, _connection))
+            using (SQLiteCommand command = new SQLiteCommand(query, connection))
             {
                 command.Parameters.AddWithValue("@question_id", questionID);
 
@@ -58,40 +50,17 @@ namespace QuizMaker.DB.Repositories
                 {
                     while (reader.Read())
                     {
-                        int id = (int)(long)reader["answer_id"];
-                        string text = (string)reader["answer_text"];
-                        int field = (int)(long)reader["answer_field"];
-                        bool isCorrect = Convert.ToBoolean((long)reader["answer_is_correct"]);
+                        int id = (int)(long)reader["Answer_ID"];
+                        string text = (string)reader["Answer_Text"];
+                        int field = (int)(long)reader["Answer_Field"];
+                        bool isCorrect = Convert.ToBoolean((long)reader["Answer_IsCorrect"]);
 
-                        Answer answer = new Answer(text, isCorrect, field, id);
+                        Answer answer = new Answer(text, isCorrect, field);
                         answers.Add(answer);
 
                     }
                 }
                 return answers;
-            }
-            
-        }
-
-        public void UpdateAnswer(Answer answer, SQLiteTransaction transaction)
-        {
-            string query = @"
-                            UPDATE Answer
-                            SET
-                            Answer_Text = @text,
-                            Answer_Field = @field,
-                            Answer_IsCorrect = @is_correct
-                            WHERE
-                            Answer_ID = @answer_id";
-
-            using (SQLiteCommand command = new SQLiteCommand(query, _connection, transaction))
-            {
-                command.Parameters.AddWithValue("@answer_id", answer.AnswerID.ToString());
-                command.Parameters.AddWithValue("@text", answer.Text);
-                command.Parameters.AddWithValue("@field", answer.Field);
-                command.Parameters.AddWithValue("@is_correct", answer.IsCorrect ? 1 : 0);
-                command.ExecuteNonQuery();
-
             }
             
         }

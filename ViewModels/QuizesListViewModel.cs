@@ -39,6 +39,7 @@ namespace QuizMaker.ViewModels
             NewQuizCommand = new NavigateCommand(createQuizNameEditViewModel);
             EditQuizCommand = new EditQuizCommand(this, _quizCollection, createQuestionsListViewModel, _quizStore);
             DeleteQuizCommand = new DeleteQuizCommand(this, _quizCollection, UpdateQuizes);
+            SaveToDBCommand = new SaveQuizesToDatabaseCommand(quizCollection);
 
             UpdateQuizes();
 
@@ -54,17 +55,6 @@ namespace QuizMaker.ViewModels
             }
         }
 
-        private void LoadQuizes(string databasePath)
-        {
-            //string connString = $"Data Source={databasePath};Version=3";
-            //QuizRepository quizRepository = new QuizRepository(connString);
-            //List<Quiz> quizes = quizRepository.GetAllQuizes();
-            //foreach (Quiz quiz in quizes)
-            //{
-            //    _quizCollection.AddQuiz(quiz);
-            //    _quizes.Add(new QuizViewModel(quiz));
-            //}
-        }
 
     }
 }

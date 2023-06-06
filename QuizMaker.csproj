@@ -9,17 +9,28 @@
 
   <ItemGroup>
     <Compile Remove="DB\Mappers\**" />
-    <Compile Remove="DB\Repositories\**" />
     <EmbeddedResource Remove="DB\Mappers\**" />
-    <EmbeddedResource Remove="DB\Repositories\**" />
     <None Remove="DB\Mappers\**" />
-    <None Remove="DB\Repositories\**" />
     <Page Remove="DB\Mappers\**" />
-    <Page Remove="DB\Repositories\**" />
   </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="System.Data.SQLite" Version="1.0.117" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Update="Resources\CreateDatabaseSql.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>CreateDatabaseSql.resx</DependentUpon>
+    </Compile>
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Update="Resources\CreateDatabaseSql.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>CreateDatabaseSql.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
   </ItemGroup>
 
 </Project>
