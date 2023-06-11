@@ -6,7 +6,7 @@ namespace QuizMaker.DB
 {
     public class DataAccess
     {
-        private SQLiteConnection _connection = new SQLiteConnection(ConfigurationManager.ConnectionStrings["ConnectionString"].ConnectionString);
+        private SQLiteConnection _connection;
         private string _databasePath;
 
         public SQLiteConnection Connection => _connection;
