@@ -31,14 +31,14 @@
         <TextBlock 
             Grid.Row="0"
             Grid.Column="0"
-            Text="Treść pytania::"
+            Text="Question:"
             FontSize="15"/>
 
         <TextBlock 
             HorizontalAlignment="Center"
             Grid.Row="0"
             Grid.Column="2"
-            Text="Kolejność"
+            Text="Order"
             Margin="0 0 0 0"
             FontSize="15"/>
 
@@ -66,7 +66,7 @@
         <TextBlock 
             Grid.Row="2"
             Grid.Column="0"
-            Text="Odpowiedź 1"
+            Text="Answer 1"
             Margin="0 25 0 0 "
             FontSize="15"/>
         <TextBox
@@ -84,7 +84,7 @@
                 VerticalContentAlignment="Center"
                 IsChecked="{Binding Answer1Correct, UpdateSourceTrigger=PropertyChanged}">
                 <Label 
-                    Content="Poprawna odpowiedź"
+                    Content="Correct Answer"
                     VerticalAlignment="Top"/>
             </CheckBox>
         </StackPanel>
@@ -92,7 +92,7 @@
         <TextBlock 
             Grid.Row="4"
             Grid.Column="0"
-            Text="Odpowiedź 2"
+            Text="Answer 2"
             Margin="0 10 0 0 "
             FontSize="15"/>
         <TextBox
@@ -110,7 +110,7 @@
                 VerticalContentAlignment="Center"
                 IsChecked="{Binding Answer2Correct, UpdateSourceTrigger=PropertyChanged}">
                 <Label 
-                    Content="Poprawna odpowiedź"
+                    Content="Correct Answer"
                     VerticalAlignment="Top"/>
             </CheckBox>
         </StackPanel>
@@ -119,7 +119,7 @@
         <TextBlock 
             Grid.Row="6"
             Grid.Column="0"
-            Text="Odpowiedź 3"
+            Text="Answer 3"
             Margin="0 10 0 0 "
             FontSize="15"/>
         <TextBox
@@ -137,7 +137,7 @@
                 VerticalContentAlignment="Center"
                 IsChecked="{Binding Answer3Correct, UpdateSourceTrigger=PropertyChanged}">
                 <Label 
-                    Content="Poprawna odpowiedź"
+                    Content="Correct Answer"
                     VerticalAlignment="Top"/>
             </CheckBox>
         </StackPanel>
@@ -145,7 +145,7 @@
         <TextBlock 
             Grid.Row="8"
             Grid.Column="0"
-            Text="Odpowiedź 4"
+            Text="Answer 4"
             Margin="0 10 0 0 "
             FontSize="15"/>
         <TextBox
@@ -163,7 +163,7 @@
                 VerticalContentAlignment="Center"
                 IsChecked="{Binding Answer4Correct, UpdateSourceTrigger=PropertyChanged}">
                 <Label 
-                    Content="Poprawna odpowiedź"
+                    Content="Correct Answer"
                     VerticalAlignment="Top"/>
             </CheckBox>
         </StackPanel>
@@ -175,8 +175,8 @@
             Grid.ColumnSpan="3"
             HorizontalAlignment="Center"
             Margin="20 35 20 20">
-            <Button Padding="20 10" Margin="0 0 20 0" Command="{Binding CancelAnswersCommand}">Wróć do pytań</Button>
-            <Button Padding="20 10" Command="{Binding SaveAnswersCommand}">Zapisz pytanie</Button>
+            <Button Padding="20 10" Margin="0 0 20 0" Command="{Binding CancelAnswersCommand}">Back to Questions</Button>
+            <Button Padding="20 10" Command="{Binding SaveAnswersCommand}">Save Question</Button>
         </StackPanel>
     
     </Grid>

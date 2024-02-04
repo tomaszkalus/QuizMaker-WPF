@@ -16,7 +16,7 @@
 
         <TextBlock 
             Grid.Row="0"
-            Text="Pytania"
+            Text="Questions"
             FontSize="15"/>
         
         <TextBlock 
@@ -29,7 +29,7 @@
 
             <ListView.View>
                 <GridView>
-                    <GridViewColumn Header="Numer pytania" Width="100">
+                    <GridViewColumn Header="No." Width="100">
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
                                 <TextBlock Text="{Binding Order}" />
@@ -37,7 +37,7 @@
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>
 
-                    <GridViewColumn Header="Nazwa pytania" Width="600" >
+                    <GridViewColumn Header="Question" Width="600" >
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
                                 <TextBlock Text="{Binding Text}" Tag="{Binding QuestionId}" />
@@ -52,10 +52,10 @@
             Orientation="Horizontal"
             Grid.Row="3"
             HorizontalAlignment="Center">
-            <Button Margin="0 0 20 0" Padding="20 10" Command="{Binding BackToQuizesCommand}">Wróć do quizów</Button>
-            <Button Margin="0 0 20 0" Padding="20 10" Command="{Binding AddQuestionCommand}">Dodaj pytanie</Button>
-            <Button Margin="0 0 20 0" Padding="20 10" Command="{Binding EditQuestionCommand}">Edytuj pytanie</Button>
-            <Button Padding="20 10" Command="{Binding DeleteQuestionCommand}">Usuń pytanie</Button>
+            <Button Margin="0 0 20 0" Padding="20 10" Command="{Binding BackToQuizesCommand}">Back to Quizes</Button>
+            <Button Margin="0 0 20 0" Padding="20 10" Command="{Binding AddQuestionCommand}">Add Question</Button>
+            <Button Margin="0 0 20 0" Padding="20 10" Command="{Binding EditQuestionCommand}">Edit Question</Button>
+            <Button Padding="20 10" Command="{Binding DeleteQuestionCommand}">Delete Question</Button>
         </StackPanel>
 
 

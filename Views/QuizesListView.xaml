@@ -15,13 +15,13 @@
 
         <TextBlock 
             Grid.Row="0"
-            Text="Quizy"
+            Text="Quizes"
             FontSize="25"/>
 
         <ListView Grid.Row="1" Margin="0 15 0 15" Height="250" ItemsSource="{Binding Quizes}" SelectedItem="{Binding SelectedQuiz}">
             <ListView.View>
                 <GridView>
-                    <GridViewColumn Header="Nazwa quizu" Width="400">
+                    <GridViewColumn Header="Quiz name" Width="400">
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
                                 <TextBlock Text="{Binding QuizName}" Tag="{Binding QuizId}"/>
@@ -29,7 +29,7 @@
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>
 
-                    <GridViewColumn Header="Ilość pytań" Width="100">
+                    <GridViewColumn Header="Number of questions" Width="150">
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
                                 <TextBlock Text="{Binding NumberOfQuestions}" />
@@ -46,11 +46,11 @@
             Orientation="Horizontal"
             Grid.Row="2"
             HorizontalAlignment="Center">
-            <Button Command="{Binding SaveToDBCommand}" Padding="20 10">Zapisz quizy do pliku .db</Button>
-            <Button Command="{Binding NewQuizCommand}" Padding="20 10" Margin="20 0 20 0">Dodaj nowy quiz</Button>
+            <Button Command="{Binding SaveToDBCommand}" Padding="20 10">Save quizes to .db file</Button>
+            <Button Command="{Binding NewQuizCommand}" Padding="20 10" Margin="20 0 20 0">Add new quiz</Button>
             
-            <Button Command="{Binding EditQuizCommand}" Padding="20 10">Edytuj quiz</Button>
-            <Button Command="{Binding DeleteQuizCommand}" Padding="20 10" Margin="20 0 20 0">Usuń quiz</Button>
+            <Button Command="{Binding EditQuizCommand}" Padding="20 10">Edit quiz</Button>
+            <Button Command="{Binding DeleteQuizCommand}" Padding="20 10" Margin="20 0 20 0">Delete quiz</Button>
             
         </StackPanel>
 

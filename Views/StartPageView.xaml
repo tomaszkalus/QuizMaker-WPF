@@ -8,8 +8,8 @@
              d:DesignHeight="450" d:DesignWidth="800">
     <Grid>
         <StackPanel Width="300" VerticalAlignment="Center">
-            <Button Command="{Binding CreateDatabaseCommand}" Height="40" Margin="0 0 0 10">Utwórz nową bazę quizów</Button>
-            <Button Command="{Binding OpenDatabaseCommand}" Height="40">Otwórz bazę quizów z pliku .db</Button>
+            <Button Command="{Binding CreateDatabaseCommand}" Height="40" Margin="0 0 0 10">Create new quizes database</Button>
+            <Button Command="{Binding OpenDatabaseCommand}" Height="40">Open new quizes database from .db file</Button>
         </StackPanel>
 
     </Grid>

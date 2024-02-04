@@ -7,7 +7,7 @@
         xmlns:views="clr-namespace:QuizMaker.Views"
         xmlns:vms="clr-namespace:QuizMaker.ViewModels"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="QuizMakerWPF" Height="450" Width="800">
     <Grid>
         <Grid.Resources>
             <DataTemplate DataType="{x:Type vms:StartPageViewModel}">

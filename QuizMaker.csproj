@@ -5,6 +5,7 @@
     <TargetFramework>net6.0-windows</TargetFramework>
     <Nullable>enable</Nullable>
     <UseWPF>true</UseWPF>
+    <PackageIcon>quiz_maker_icon.jpg</PackageIcon>
   </PropertyGroup>
 
   <ItemGroup>
@@ -12,6 +13,13 @@
     <EmbeddedResource Remove="DB\Mappers\**" />
     <None Remove="DB\Mappers\**" />
     <Page Remove="DB\Mappers\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="..\..\..\OneDrive\Obrazy\Greenshot Screenshots\quiz_maker_icon.jpg">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
   </ItemGroup>
 
   <ItemGroup>
